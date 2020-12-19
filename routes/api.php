@@ -26,3 +26,4 @@ Route::group(
         Route::post('logout', 'AuthController@logout');
     }
 );
+Route::resource('product','\App\Http\Controllers\ProductController');

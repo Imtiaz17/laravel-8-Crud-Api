@@ -37,7 +37,7 @@ class AuthController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json($validator->errors(), 422);
         }
         if (!$token = auth()->attempt($validator->validated())) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -61,16 +61,11 @@ class AuthController extends Controller
             [
                 'name'     => 'required|string|between:2,100',
                 'email'    => 'required|email|unique:users',
-                'password' => 'required|confirmed|min:6',
-                'password_confirmation' => 'required'
+                'password' => 'required|min:6',
             ]
         );
-
-        if ($validator->fails()) {
-            return response()->json(
-                [$validator->errors()],
-                422
-            );
+         if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
         }
 
         $user = User::create(
@@ -91,7 +86,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        $this->guard()->logout();
+        auth()->logout();
         return response()->json(['message' => 'User logged out successfully']);
     }
 
