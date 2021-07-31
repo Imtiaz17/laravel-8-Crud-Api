@@ -117,14 +117,6 @@ class ProductController extends Controller
         ]],200);
     }
 
-    protected function storeImg($image,$product)
-    {
-        $extname=$image->getClientOriginalExtension();
-        $img_name = substr(md5(uniqid(rand(1,6))).microtime(true), 0, 15).'.'.$extname;
-        $image->move(public_path('images'), $img_name);
-        $product->image = $img_name;
-    }
-
     /**
      * Remove the specified resource from storage.
      *
